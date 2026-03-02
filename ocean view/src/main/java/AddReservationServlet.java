@@ -1,171 +1,156 @@
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/AddReservationServlet")
 public class AddReservationServlet extends HttpServlet {
 
-    private static final String URL =
-            "jdbc:mysql://localhost:3306/ocean_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Colombo";
+    private static final String URL  = "jdbc:mysql://localhost:3306/ocean_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Colombo";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASS = "";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // ✅ Must be logged in
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("username") == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
+        String guestName = safeTrim(request.getParameter("guestName"));
+        String contact   = safeTrim(request.getParameter("contact"));
+        String address   = safeTrim(request.getParameter("address"));
+        String roomType  = safeTrim(request.getParameter("roomType"));
+        String checkInS  = safeTrim(request.getParameter("checkIn"));
+        String checkOutS = safeTrim(request.getParameter("checkOut"));
 
-        // Read form fields
-        String guestName = safe(request.getParameter("guestName"));
-        String contact = safe(request.getParameter("contact")).replaceAll("\\s+", "");
-        String address = safe(request.getParameter("address"));
-        String roomType = safe(request.getParameter("roomType"));
-        String checkInStr = safe(request.getParameter("checkIn"));
-        String checkOutStr = safe(request.getParameter("checkOut"));
-
-        // ✅ Server-side validation
-        String error = validate(guestName, contact, address, roomType, checkInStr, checkOutStr);
-        if (error != null) {
-            request.setAttribute("error", error);
+        String validationError = validateInputs(guestName, contact, address, roomType, checkInS, checkOutS);
+        if (validationError != null) {
+            request.setAttribute("error", validationError);
             request.getRequestDispatcher("new_reservation.jsp").forward(request, response);
             return;
         }
 
-        LocalDate checkIn = LocalDate.parse(checkInStr);
-        LocalDate checkOut = LocalDate.parse(checkOutStr);
+        LocalDate checkIn  = LocalDate.parse(checkInS);
+        LocalDate checkOut = LocalDate.parse(checkOutS);
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection con = DriverManager.getConnection(URL, USER, PASS)) {
 
-            try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
+                // ✅ 1) Block overlap booking for same roomType
+                String overlapSql =
+                        "SELECT COUNT(*) FROM reservations " +
+                        "WHERE room_type=? AND (check_in < ? AND check_out > ?)";
 
-                // ✅ Generate reservation code RES-001, RES-002...
-                String reservationCode = generateReservationCode(con);
-
-                // ✅ Insert into DB
-                String sql = "INSERT INTO reservations " +
-                        "(reservation_code, guest_name, contact, address, room_type, check_in, check_out) " +
-                        "VALUES (?,?,?,?,?,?,?)";
-
-                try (PreparedStatement ps = con.prepareStatement(sql)) {
-                    ps.setString(1, reservationCode);
-                    ps.setString(2, guestName);
-                    ps.setString(3, contact);
-                    ps.setString(4, address);
-                    ps.setString(5, roomType);
-                    ps.setDate(6, Date.valueOf(checkIn));
-                    ps.setDate(7, Date.valueOf(checkOut));
-
-                    int rows = ps.executeUpdate();
-
-                    if (rows > 0) {
-                        request.setAttribute("success", "Reservation created successfully! Code: " + reservationCode);
-                    } else {
-                        request.setAttribute("error", "Failed to create reservation. Try again.");
+                try (PreparedStatement ps = con.prepareStatement(overlapSql)) {
+                    ps.setString(1, roomType);
+                    ps.setDate(2, Date.valueOf(checkOut));
+                    ps.setDate(3, Date.valueOf(checkIn));
+                    try (ResultSet rs = ps.executeQuery()) {
+                        rs.next();
+                        if (rs.getInt(1) > 0) {
+                            request.setAttribute("error",
+                                    "This room type is already booked for the selected dates. Please choose different dates.");
+                            request.getRequestDispatcher("new_reservation.jsp").forward(request, response);
+                            return;
+                        }
                     }
                 }
+
+                // ✅ 2) Insert reservation FIRST (to get auto id)
+                
+                String insertSql =
+                        "INSERT INTO reservations (guest_name, contact, address, room_type, check_in, check_out) " +
+                        "VALUES (?,?,?,?,?,?)";
+
+                long newId;
+
+                try (PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+                    ps.setString(1, guestName);
+                    ps.setString(2, contact.replaceAll("\\s+",""));
+                    ps.setString(3, address);
+                    ps.setString(4, roomType);
+                    ps.setDate(5, Date.valueOf(checkIn));
+                    ps.setDate(6, Date.valueOf(checkOut));
+
+                    int rows = ps.executeUpdate();
+                    if (rows == 0) {
+                        request.setAttribute("error", "Failed to create reservation. Please try again.");
+                        request.getRequestDispatcher("new_reservation.jsp").forward(request, response);
+                        return;
+                    }
+
+                    try (ResultSet keys = ps.getGeneratedKeys()) {
+                        if (!keys.next()) {
+                            request.setAttribute("error", "Reservation created but ID not returned.");
+                            request.getRequestDispatcher("new_reservation.jsp").forward(request, response);
+                            return;
+                        }
+                        newId = keys.getLong(1);
+                    }
+                }
+
+                // ✅ 3) Generate reservation code: RES-001, RES-002...
+                String reservationCode = String.format("RES-%03d", newId);
+
+                // ✅ 4) Update the row with reservation_code
+                String updateCodeSql = "UPDATE reservations SET reservation_code=? WHERE id=?";
+                try (PreparedStatement ps = con.prepareStatement(updateCodeSql)) {
+                    ps.setString(1, reservationCode);
+                    ps.setLong(2, newId);
+                    ps.executeUpdate();
+                }
+
+                request.setAttribute("success", "Reservation created successfully! Reservation No: " + reservationCode);
+                request.getRequestDispatcher("new_reservation.jsp").forward(request, response);
+
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "DB Error: " + e.getMessage());
+            request.setAttribute("error", "Server error: " + e.getMessage());
+            request.getRequestDispatcher("new_reservation.jsp").forward(request, response);
         }
-
-        request.getRequestDispatcher("new_reservation.jsp").forward(request, response);
     }
 
-    // ---------- Helpers ----------
-
-    private static String safe(String s) {
+    private String safeTrim(String s){
         return (s == null) ? "" : s.trim();
     }
 
-    private static String validate(String guestName, String contact, String address, String roomType,
-                                   String checkInStr, String checkOutStr) {
+    private String validateInputs(String guestName, String contact, String address,
+                                  String roomType, String checkIn, String checkOut){
 
-        // Guest name: letters/spaces/dot, min 3
-        if (guestName.length() < 3 || !guestName.matches("^[A-Za-z.\\s]+$")) {
-            return "Guest Name must be at least 3 characters and contain only letters/spaces.";
-        }
+        if (guestName.length() < 3 || guestName.length() > 60) return "Guest Name must be 3–60 characters.";
+        if (!guestName.matches("^[A-Za-z.\\s'\\-]+$")) return "Guest Name has invalid characters.";
 
-        // Contact (Sri Lanka): +94xxxxxxxxx OR 0xxxxxxxxx
-        if (!contact.matches("^(\\+94\\d{9}|0\\d{9})$")) {
-            return "Invalid Contact Number. Use +94XXXXXXXXX or 0XXXXXXXXX.";
-        }
+        String phone = contact.replaceAll("\\s+","");
+        if (!phone.matches("^(\\+94\\d{9}|0\\d{9})$")) return "Invalid Sri Lanka contact number format.";
 
-        // Address
-        if (address.length() < 8) {
-            return "Address must be at least 8 characters.";
-        }
+        if (address.length() < 8 || address.length() > 200) return "Address must be 8–200 characters.";
+        if (address.matches("^[\\W_]+$")) return "Address cannot be only symbols.";
 
-        // Room type
-        if (roomType.isEmpty()) {
-            return "Please select a room type.";
-        }
+        if (roomType.isEmpty()) return "Please select a room type.";
 
-        // Dates
-        if (checkInStr.isEmpty() || checkOutStr.isEmpty()) {
-            return "Please select check-in and check-out dates.";
-        }
+        if (checkIn.isEmpty() || checkOut.isEmpty()) return "Please select check-in and check-out dates.";
 
-        LocalDate checkIn;
-        LocalDate checkOut;
-        try {
-            checkIn = LocalDate.parse(checkInStr);
-            checkOut = LocalDate.parse(checkOutStr);
-        } catch (Exception e) {
+        LocalDate in, out;
+        try{
+            in = LocalDate.parse(checkIn);
+            out = LocalDate.parse(checkOut);
+        }catch(Exception ex){
             return "Invalid date format.";
         }
 
         LocalDate today = LocalDate.now();
-        if (checkIn.isBefore(today)) {
-            return "Check-in date cannot be in the past.";
-        }
-        if (!checkOut.isAfter(checkIn)) {
-            return "Check-out date must be after check-in date.";
-        }
+        if (in.isBefore(today)) return "Check-in date cannot be in the past.";
+        if (!out.isAfter(in)) return "Check-out must be after check-in (minimum 1 night).";
 
-        long days = ChronoUnit.DAYS.between(checkIn, checkOut);
-        if (days > 30) {
-            return "Maximum stay allowed is 30 days.";
-        }
+        long stay = java.time.temporal.ChronoUnit.DAYS.between(in, out);
+        if (stay > 30) return "Maximum stay allowed is 30 nights.";
 
-        return null; // ✅ all OK
-    }
-
-    private static String generateReservationCode(Connection con) throws SQLException {
-        String lastCode = null;
-
-        String q = "SELECT reservation_code FROM reservations ORDER BY id DESC LIMIT 1";
-        try (PreparedStatement ps = con.prepareStatement(q);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                lastCode = rs.getString("reservation_code");
-            }
-        }
-
-        int nextNum = 1;
-        if (lastCode != null && lastCode.startsWith("RES-")) {
-            String numPart = lastCode.substring(4).trim();
-            try {
-                nextNum = Integer.parseInt(numPart) + 1;
-            } catch (NumberFormatException ignored) { }
-        }
-
-        return String.format("RES-%03d", nextNum);
+        return null;
     }
 }
