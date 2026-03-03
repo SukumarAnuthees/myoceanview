@@ -642,6 +642,6 @@
 <div class="lightbox" id="lightbox" aria-hidden="true">
     <img id="lightboxImg" src="" alt="Zoomed screenshot">
 </div>
-
+<!-- Version 1 Update -->
 </body>
 </html>
