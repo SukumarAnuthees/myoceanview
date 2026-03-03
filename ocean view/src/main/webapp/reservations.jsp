@@ -429,9 +429,7 @@
                 </div>
 
                 <div class="hero-actions">
-                    <a class="btn" href="dashboard.jsp">
-                        <span>←</span><span>Dashboard</span>
-                    </a>
+                   
                     <a class="btn primary" href="new_reservation.jsp">
                         <span>＋</span><span>New Reservation</span>
                     </a>
