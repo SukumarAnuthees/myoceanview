@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -45,7 +44,7 @@
             opacity: 0.9;
         }
 
-        /* ⭐ Gallery Styles */
+        /* Gallery */
         .gallery {
             margin-top: 25px;
             display: flex;
@@ -78,16 +77,16 @@
             width: 380px;
         }
 
-       .logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-.logo-icon {
-    font-size: 32px;
-    margin-right: 10px;
-}
+        .logo-icon {
+            font-size: 32px;
+            margin-right: 10px;
+        }
 
         .login-card h2 {
             font-size: 32px;
@@ -147,6 +146,20 @@
             text-align: center;
         }
 
+        /* Back to homepage link */
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #0077b6;
+            font-weight: 500;
+        }
+
+        .back-home:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 900px) {
             .left {
                 display: none;
@@ -157,6 +170,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <!-- LEFT IMAGE SECTION -->
@@ -165,7 +179,6 @@
         <h1>Ocean View Resort</h1>
         <p>Experience refined coastal luxury in the heart of Galle — where comfort meets the sea.</p>
 
-        <!-- ⭐ Image Gallery Added -->
         <div class="gallery">
             <img src="images/pool.jpg" alt="Infinity Pool">
             <img src="images/room.jpg" alt="Luxury Suite">
@@ -179,9 +192,9 @@
     <div class="login-card">
 
         <div class="logo">
-    <span class="logo-icon">🌊</span>
-    <h2>Ocean View Resort</h2>
-</div>
+            <span class="logo-icon">🌊</span>
+            <h2>Ocean View Resort</h2>
+        </div>
 
         <h2>Member Login</h2>
         <p>Please enter your credentials to continue to the management portal</p>
@@ -201,6 +214,9 @@
 
             <button type="submit">Access Dashboard</button>
         </form>
+
+        <!-- Back to Homepage -->
+        <a href="index.jsp" class="back-home">← Back to Homepage</a>
 
     </div>
 </div>

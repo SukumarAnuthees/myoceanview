@@ -21,57 +21,45 @@ font-family:'Poppins',sans-serif;
 /* ===== BACKGROUND ===== */
 
 body{
-
 background:
 linear-gradient(rgba(10,30,50,0.6),rgba(10,30,50,0.7)),
 url("images/resort-bg.jpg");
-
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
 color:white;
-
 }
 
 /* ===== NAVBAR ===== */
 
 .navbar{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:20px 60px;
-
 }
 
 .logo{
-
 font-size:28px;
 font-weight:700;
 letter-spacing:1px;
-
 }
 
 .nav-links a{
-
 margin-left:25px;
 text-decoration:none;
 color:white;
 font-weight:500;
 transition:0.3s;
-
 }
 
 .nav-links a:hover{
-
 color:#5ee6ff;
-
 }
 
 /* ===== HERO ===== */
 
 .hero{
-
 height:85vh;
 display:flex;
 flex-direction:column;
@@ -79,29 +67,23 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:20px;
-
 }
 
 .hero h1{
-
 font-size:65px;
 margin-bottom:20px;
-
 }
 
 .hero p{
-
 max-width:700px;
 font-size:20px;
 line-height:1.6;
 margin-bottom:35px;
-
 }
 
 /* ===== BUTTONS ===== */
 
 .btn{
-
 padding:14px 30px;
 border-radius:30px;
 border:none;
@@ -110,51 +92,39 @@ cursor:pointer;
 margin:10px;
 transition:0.3s;
 font-weight:600;
-
 }
 
 .btn-primary{
-
 background:#22c1ff;
 color:white;
-
 }
 
 .btn-primary:hover{
-
 background:#00a2e0;
-
 }
 
 .btn-outline{
-
 background:transparent;
 border:2px solid white;
 color:white;
-
 }
 
 .btn-outline:hover{
-
 background:white;
 color:#333;
-
 }
 
 /* ===== GLASS CARDS ===== */
 
 .features{
-
 display:flex;
 justify-content:center;
 gap:30px;
 flex-wrap:wrap;
 padding:60px 10%;
-
 }
 
 .card{
-
 background:rgba(255,255,255,0.15);
 backdrop-filter:blur(10px);
 padding:25px;
@@ -163,73 +133,56 @@ width:260px;
 text-align:center;
 box-shadow:0 5px 20px rgba(0,0,0,0.3);
 transition:0.3s;
-
 }
 
 .card:hover{
-
 transform:translateY(-10px);
-
 }
 
 .card h3{
-
 margin-bottom:10px;
-
 }
 
 /* ===== ROOMS ===== */
 
 .rooms{
-
 background:white;
 color:#333;
 padding:80px 10%;
 text-align:center;
-
 }
 
 .rooms h2{
-
 font-size:36px;
 margin-bottom:40px;
-
 }
 
 .room-container{
-
 display:flex;
 flex-wrap:wrap;
 justify-content:center;
 gap:25px;
-
 }
 
 .room{
-
 background:#f8f9fc;
 padding:25px;
 border-radius:10px;
 width:230px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
-
 }
 
 .room h3{
-
 margin-bottom:10px;
-
 }
 
 /* ===== FOOTER ===== */
 
 .footer{
-
 text-align:center;
 padding:25px;
 background:#0a2540;
 margin-top:40px;
-
 }
 
 </style>
@@ -243,18 +196,17 @@ margin-top:40px;
 <div class="navbar">
 
 <div class="logo">
-
 🌊 Ocean View Resort
-
 </div>
 
 <div class="nav-links">
+<a href="index.jsp">Home</a>
 
-<a href="#">Home</a>
-<a href="new_reservation.jsp">Reservation</a>
+<!-- ✅ Reservation requires Admin login -->
+<a href="reservation_gate.jsp">Reservation</a>
+
 <a href="login.jsp">Staff Login</a>
 <a href="help.jsp">Help</a>
-
 </div>
 
 </div>
@@ -266,22 +218,19 @@ margin-top:40px;
 <h1>Relax by the Ocean</h1>
 
 <p>
-
 Experience comfort, luxury, and unforgettable views at Ocean View Resort.
 Enjoy peaceful rooms, fresh sea breeze, and warm hospitality.
-
 </p>
 
 <div>
-
-<a href="new_reservation.jsp">
+<!-- ✅ Book Your Stay requires Admin login -->
+<a href="reservation_gate.jsp">
 <button class="btn btn-primary">Book Your Stay</button>
 </a>
 
 <a href="login.jsp">
 <button class="btn btn-outline">Staff Login</button>
 </a>
-
 </div>
 
 </section>
@@ -291,33 +240,18 @@ Enjoy peaceful rooms, fresh sea breeze, and warm hospitality.
 <section class="features">
 
 <div class="card">
-
 <h3>🌊 Ocean Views</h3>
-
-<p>
-Enjoy beautiful sunrise and sunset views directly from your room.
-</p>
-
+<p>Enjoy beautiful sunrise and sunset views directly from your room.</p>
 </div>
 
 <div class="card">
-
 <h3>🛎 Quality Service</h3>
-
-<p>
-Our friendly staff ensures a comfortable and relaxing stay.
-</p>
-
+<p>Our friendly staff ensures a comfortable and relaxing stay.</p>
 </div>
 
 <div class="card">
-
 <h3>🏖 Luxury Experience</h3>
-
-<p>
-Modern rooms and peaceful surroundings for a perfect vacation.
-</p>
-
+<p>Modern rooms and peaceful surroundings for a perfect vacation.</p>
 </div>
 
 </section>
@@ -357,9 +291,7 @@ Modern rooms and peaceful surroundings for a perfect vacation.
 <!-- FOOTER -->
 
 <div class="footer">
-
 © 2026 Ocean View Resort | Designed for Guest Comfort
-
 </div>
 
 </body>
