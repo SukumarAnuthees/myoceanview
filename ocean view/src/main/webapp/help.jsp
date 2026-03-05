@@ -138,7 +138,6 @@
         .faq-item.open .faq-body{max-height:2000px;}
         .faq-item.open .chev{transform:rotate(180deg);}
 
-        /* content boxes */
         .note{
             background:rgba(2,132,199,0.08);
             border:1px dashed rgba(2,132,199,0.35);
@@ -166,7 +165,6 @@
         ul,ol{margin:8px 0 8px 20px;}
         li{margin:6px 0;}
 
-        /* ===== Screenshot + Labels ===== */
         .shot{
             margin-top:12px;
             border-radius:14px;
@@ -217,7 +215,6 @@
             line-height:1.3;
         }
 
-        /* ===== Lightbox ===== */
         .lightbox{
             position:fixed; inset:0;
             background:rgba(2,6,23,0.72);
@@ -279,7 +276,6 @@
 <body>
 <div class="app">
 
-    <!-- Sidebar -->
     <aside class="sidebar">
         <div class="brand">
             <div class="brand-icon">
@@ -311,7 +307,6 @@
         </div>
     </aside>
 
-    <!-- Main -->
     <main class="main">
 
         <div class="header">
@@ -341,7 +336,7 @@
 
                 <div class="faq">
 
-                    <!-- 1: LOGIN (Your image + labels) -->
+                    <!-- 1 -->
                     <div class="faq-item">
                         <button type="button" class="faq-btn">
                             <span>How do I log in?</span>
@@ -368,10 +363,8 @@
                                 <div class="shot">
                                     <div class="cap">Screenshot: Login Screen (Click to Zoom)</div>
                                     <div class="shot-wrap">
-                                        <!-- ✅ Your image path -->
                                         <img src="help/login.png" alt="Login screenshot">
 
-                                        <!-- ✅ Labels for your login design -->
                                         <div class="step" style="top:45%; left:72%;">1</div>
                                         <div class="step-label" style="top:45%; left:76%;">Enter User ID</div>
 
@@ -381,10 +374,6 @@
                                         <div class="step" style="top:77%; left:72%;">3</div>
                                         <div class="step-label" style="top:77%; left:76%;">Click Access Dashboard</div>
                                     </div>
-                                </div>
-
-                                <div class="mini">
-                                    If the circles are slightly off in your screen, tell me your image size and I’ll adjust the exact positions.
                                 </div>
                             </div>
                         </div>
@@ -418,43 +407,32 @@
                                 </div>
 
                                 <div class="shot">
-<div class="shot">
-  <div class="cap">Screenshot: New Reservation (Click to Zoom)</div>
+                                    <div class="cap">Screenshot: New Reservation (Click to Zoom)</div>
+                                    <div class="shot-wrap">
+                                        <img src="help/res.png" alt="New Reservation screenshot">
 
-  <div class="shot-wrap">
-    <img src="help/res.png" alt="New Reservation screenshot">
+                                        <div class="step" style="top:16%; left:30%;">1</div>
+                                        <div class="step-label" style="top:16%; left:34%;">Enter Guest Name</div>
 
-    <!-- 1: Guest Name -->
-    <div class="step" style="top:16%; left:30%;">1</div>
-    <div class="step-label" style="top:16%; left:34%;">Enter Guest Name</div>
+                                        <div class="step" style="top:16%; right:28%;">2</div>
+                                        <div class="step-label" style="top:16%; right:8%;">Enter Contact Number</div>
 
-    <!-- 2: Contact Number -->
-    <div class="step" style="top:16%; right:28%;">2</div>
-    <div class="step-label" style="top:16%; right:8%;">Enter Contact Number</div>
+                                        <div class="step" style="top:30%; left:30%;">3</div>
+                                        <div class="step-label" style="top:30%; left:34%;">Enter Address</div>
 
-    <!-- 3: Address -->
-    <div class="step" style="top:30%; left:30%;">3</div>
-    <div class="step-label" style="top:30%; left:34%;">Enter Address</div>
+                                        <div class="step" style="top:46%; left:30%;">4</div>
+                                        <div class="step-label" style="top:46%; left:34%;">Select Room Type</div>
 
-    <!-- 4: Room Type -->
-    <div class="step" style="top:46%; left:30%;">4</div>
-    <div class="step-label" style="top:46%; left:34%;">Select Room Type</div>
+                                        <div class="step" style="top:63%; left:30%;">5</div>
+                                        <div class="step-label" style="top:63%; left:34%;">Choose Check-in Date</div>
 
-    <!-- 5: Check-in -->
-    <div class="step" style="top:63%; left:30%;">5</div>
-    <div class="step-label" style="top:63%; left:34%;">Choose Check-in Date</div>
+                                        <div class="step" style="top:63%; right:28%;">6</div>
+                                        <div class="step-label" style="top:63%; right:8%;">Choose Check-out Date</div>
 
-    <!-- 6: Check-out -->
-    <div class="step" style="top:63%; right:28%;">6</div>
-    <div class="step-label" style="top:63%; right:8%;">Choose Check-out Date</div>
-
-    <!-- 7: Create Reservation Button -->
-    <div class="step" style="top:84%; left:46%;">7</div>
-    <div class="step-label" style="top:84%; left:50%;">Click Create Reservation</div>
-
-  </div>
-</div>
-</div>
+                                        <div class="step" style="top:84%; left:46%;">7</div>
+                                        <div class="step-label" style="top:84%; left:50%;">Click Create Reservation</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -479,33 +457,137 @@
                                     <b>Best practice:</b> Use contact number to avoid selecting the wrong guest.
                                 </div>
 
-                               <div class="shot">
-  <div class="cap">Screenshot: Reservations Page (Click to Zoom)</div>
+                                <div class="shot">
+                                    <div class="cap">Screenshot: Reservations Page (Click to Zoom)</div>
+                                  
 
   <div class="shot-wrap">
-    <img src="help/search.png" alt="Reservations page screenshot">
+    <img src="help/search1.png" alt="Reservations page screenshot">
 
-    <!-- 1: Search box -->
-    <div class="step" style="top:23%; left:26%;">1</div>
-    <div class="step-label" style="top:23%; left:30%;">Type guest name / contact / reservation ID</div>
+    <!-- 1: Search text box -->
+    <div class="step" style="top:33%; left:34%;">1</div>
+    <div class="step-label" style="top:31%; left:40%;">Type Reservation ID, guest name, or contact number</div>
 
     <!-- 2: Search button -->
-    <div class="step" style="top:23%; right:26%;">2</div>
-    <div class="step-label" style="top:23%; right:10%;">Click Search</div>
+    <div class="step" style="top:33%; left:67%;">2</div>
+    <div class="step-label" style="top:31%; left:71%;">Click Search to filter reservations</div>
 
     <!-- 3: New Reservation button -->
-    <div class="step" style="top:10%; right:10%;">3</div>
-    <div class="step-label" style="top:10%; right:16%;">Create a new reservation</div>
+    <div class="step" style="top:18%; left:84%;">3</div>
+    <div class="step-label" style="top:16%; left:62%;">Create a new reservation</div>
 
-    <!-- 4: Reservation cards -->
-    <div class="step" style="top:52%; left:30%;">4</div>
-    <div class="step-label" style="top:52%; left:34%;">Review reservation cards</div>
+    <!-- 4: Reservation cards/details -->
+    <div class="step" style="top:56%; left:36%;">4</div>
+    <div class="step-label" style="top:54%; left:42%;">View reservation details</div>
 
-    <!-- 5: Stay dates / nights -->
-    <div class="step" style="top:70%; left:30%;">5</div>
-    <div class="step-label" style="top:70%; left:34%;">Check stay dates & nights</div>
+    <!-- 5: Edit button -->
+    <div class="step" style="top:82%; left:38%;">5</div>
+    <div class="step-label" style="top:80%; left:44%;">Edit reservation</div>
+
+    <!-- 6: Delete button -->
+    <div class="step" style="top:82%; left:54%;">6</div>
+    <div class="step-label" style="top:80%; left:60%;">Delete reservation</div>
+
   </div>
 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ✅ NEW: UPDATE RESERVATION (based on your new reservations.jsp modal edit) -->
+                    <div class="faq-item">
+                        <button type="button" class="faq-btn">
+                            <span>How do I update (edit) a reservation?</span>
+                            <svg class="chev" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9l6 6 6-6" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-body">
+                            <div class="faq-content">
+                                <ol>
+                                    <li>Open <b>Reservations</b> from the menu.</li>
+                                    <li>Find the correct booking card (use Search if needed).</li>
+                                    <li>Click the <b>✏️ Edit</b> button on that reservation card.</li>
+                                    <li>An <b>Edit Reservation</b> popup (modal) will open.</li>
+                                    <li>Update the details you want (Guest, Contact, Address, Room Type, Dates).</li>
+                                    <li>Click <b>Update Reservation</b> to save.</li>
+                                </ol>
+
+                                <div class="ok">
+                                    <b>Validations applied when updating:</b>
+                                    <ul>
+                                        <li><b>Guest Name</b> required (3–60 letters, spaces, . ' - allowed).</li>
+                                        <li><b>Contact</b> required (format: <b>07XXXXXXXX</b> or <b>+94XXXXXXXXX</b>).</li>
+                                        <li><b>Room Type</b> must be one of the system room types.</li>
+                                        <li><b>Dates</b>: Check-out must be after check-in.</li>
+                                        <li><b>Stay length</b> must be 1–30 nights.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="warn">
+                                    <b>Common mistakes:</b>
+                                    <ul>
+                                        <li>Entering check-out date same as check-in (not allowed).</li>
+                                        <li>Typing invalid phone number format.</li>
+                                        <li>Selecting wrong room type for guest request.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- ✅ Screenshot for Update/Edit (use your own image file) -->
+                                <div class="shot">
+  <div class="cap">Screenshot: Edit Reservation Modal (Click to Zoom)</div>
+
+  <div class="shot-wrap">
+    <!-- ✅ Your new modal screenshot -->
+    <img src="help/edit.png" alt="Edit reservation modal screenshot">
+
+    <!-- 1: Modal Title -->
+    <div class="step" style="top:10%; left:34%;">1</div>
+    <div class="step-label" style="top:10%; left:38%;">Edit Reservation title + Reservation Code</div>
+
+    <!-- 2: Close Button -->
+    <div class="step" style="top:10%; left:83%;">2</div>
+    <div class="step-label" style="top:10%; left:87%;">Click ✕ to close the popup</div>
+
+    <!-- 3: Guest Name -->
+    <div class="step" style="top:26%; left:34%;">3</div>
+    <div class="step-label" style="top:26%; left:38%;">Update Guest Name</div>
+
+    <!-- 4: Contact -->
+    <div class="step" style="top:26%; left:63%;">4</div>
+    <div class="step-label" style="top:26%; left:67%;">Update Contact Number</div>
+
+    <!-- 5: Address -->
+    <div class="step" style="top:42%; left:34%;">5</div>
+    <div class="step-label" style="top:42%; left:38%;">Update Address (optional)</div>
+
+    <!-- 6: Room Type -->
+    <div class="step" style="top:58%; left:34%;">6</div>
+    <div class="step-label" style="top:58%; left:38%;">Select Room Type</div>
+
+    <!-- 7: Check In -->
+    <div class="step" style="top:58%; left:63%;">7</div>
+    <div class="step-label" style="top:58%; left:67%;">Choose Check-in Date</div>
+
+    <!-- 8: Check Out -->
+    <div class="step" style="top:74%; left:34%;">8</div>
+    <div class="step-label" style="top:74%; left:38%;">Choose Check-out Date</div>
+
+    <!-- 9: Cancel -->
+    <div class="step" style="top:88%; left:60%;">9</div>
+    <div class="step-label" style="top:88%; left:64%;">Cancel update</div>
+
+    <!-- 10: Update Reservation -->
+    <div class="step" style="top:88%; left:76%;">10</div>
+    <div class="step-label" style="top:88%; left:80%;">Click Update Reservation to save</div>
+
+  </div>
+</div>
+
+                                <div class="mini">
+                                    If your labels are not matching exactly, tell me your image size (width x height) and I’ll set perfect positions.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -537,41 +619,33 @@
                                     </ul>
                                 </div>
 
-                               <div class="shot">
-  <div class="cap">Screenshot: Billing / Guest Bill (Click to Zoom)</div>
+                                <div class="shot">
+                                    <div class="cap">Screenshot: Billing / Guest Bill (Click to Zoom)</div>
+                                    <div class="shot-wrap">
+                                        <img src="help/billing.png" alt="Billing page screenshot">
 
-  <div class="shot-wrap">
-    <img src="help/billing.png" alt="Billing page screenshot">
+                                        <div class="step" style="top:8%; right:14%;">1</div>
+                                        <div class="step-label" style="top:8%; right:20%;">Reservation ID</div>
 
-    <!-- 1: Reservation ID badge -->
-    <div class="step" style="top:8%; right:14%;">1</div>
-    <div class="step-label" style="top:8%; right:20%;">Reservation ID</div>
+                                        <div class="step" style="top:24%; left:26%;">2</div>
+                                        <div class="step-label" style="top:24%; left:30%;">Confirm guest details</div>
 
-    <!-- 2: Guest details -->
-    <div class="step" style="top:24%; left:26%;">2</div>
-    <div class="step-label" style="top:24%; left:30%;">Confirm guest details</div>
+                                        <div class="step" style="top:40%; left:26%;">3</div>
+                                        <div class="step-label" style="top:40%; left:30%;">Check room type & stay dates</div>
 
-    <!-- 3: Room type + stay -->
-    <div class="step" style="top:40%; left:26%;">3</div>
-    <div class="step-label" style="top:40%; left:30%;">Check room type & stay dates</div>
+                                        <div class="step" style="top:60%; left:26%;">4</div>
+                                        <div class="step-label" style="top:60%; left:30%;">Review rate, nights & service charge</div>
 
-    <!-- 4: Rate / nights / charges -->
-    <div class="step" style="top:60%; left:26%;">4</div>
-    <div class="step-label" style="top:60%; left:30%;">Review rate, nights & service charge</div>
+                                        <div class="step" style="top:74%; right:16%;">5</div>
+                                        <div class="step-label" style="top:74%; right:22%;">Confirm total amount</div>
 
-    <!-- 5: Total amount -->
-    <div class="step" style="top:74%; right:16%;">5</div>
-    <div class="step-label" style="top:74%; right:22%;">Confirm total amount</div>
+                                        <div class="step" style="top:91%; left:55%;">6</div>
+                                        <div class="step-label" style="top:91%; left:59%;">Print bill</div>
 
-    <!-- 6: Print bill -->
-    <div class="step" style="top:91%; left:55%;">6</div>
-    <div class="step-label" style="top:91%; left:59%;">Print bill</div>
-
-    <!-- 7: Back button -->
-    <div class="step" style="top:91%; right:12%;">7</div>
-    <div class="step-label" style="top:91%; right:18%;">Back to reservations</div>
-  </div>
-</div>
+                                        <div class="step" style="top:91%; right:12%;">7</div>
+                                        <div class="step-label" style="top:91%; right:18%;">Back to reservations</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -584,19 +658,14 @@
                                 <path d="M6 9l6 6 6-6" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </button>
-                        <!-- 5 (Room types & rates - MATCHES SYSTEM RATES) -->
-<div class="faq-item">
- 
-
-    <div class="faq-body">
-        <div class="faq-content" style="color:#64748b;">
-            <b>Standard Room:</b> LKR 10,000 per night — Comfortable room with essential amenities.<br>
-            <b>Deluxe Room:</b> LKR 15,000 per night — Spacious room with ocean view.<br>
-            <b>Ocean Suite:</b> LKR 20,000 per night — Premium suite with private balcony.<br>
-            <b>Beach Villa:</b> LKR 30,000 per night — Luxury villa with private beach access.
-        </div>
-    </div>
-</div>
+                        <div class="faq-body">
+                            <div class="faq-content" style="color:#64748b;">
+                                <b>Standard Room:</b> LKR 10,000 per night — Comfortable room with essential amenities.<br>
+                                <b>Deluxe Room:</b> LKR 15,000 per night — Spacious room with ocean view.<br>
+                                <b>Ocean Suite:</b> LKR 20,000 per night — Premium suite with private balcony.<br>
+                                <b>Beach Villa:</b> LKR 30,000 per night — Luxury villa with private beach access.
+                            </div>
+                        </div>
                     </div>
 
                     <!-- 6 -->
@@ -623,25 +692,21 @@
                                         <li>Important for shared reception computers</li>
                                     </ul>
                                 </div>
-
-                                
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-               
-
             </section>
         </div>
     </main>
 </div>
 
-<!-- Lightbox -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
     <img id="lightboxImg" src="" alt="Zoomed screenshot">
 </div>
-<!-- Version 1 Update -->
+
+<!-- Version 2 Update -->
 </body>
 </html>
