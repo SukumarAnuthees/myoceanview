@@ -61,7 +61,6 @@ public class AddReservationServlet extends HttpServlet {
                 }
 
                 // ✅ 2) Insert reservation FIRST (to get auto id)
-                
                 String insertSql =
                         "INSERT INTO reservations (guest_name, contact, address, room_type, check_in, check_out) " +
                         "VALUES (?,?,?,?,?,?)";
@@ -104,6 +103,26 @@ public class AddReservationServlet extends HttpServlet {
                     ps.executeUpdate();
                 }
 
+                // ✅ 5) "Normal SMS" simulation (console) + Popup message
+                String smsText =
+                        "Ocean View Resort: Reservation Confirmed ✅\n" +
+                        "Ref: " + reservationCode + "\n" +
+                        "Guest: " + guestName + "\n" +
+                        "Room: " + roomType + "\n" +
+                        "Check-in: " + checkInS + "\n" +
+                        "Check-out: " + checkOutS + "\n" +
+                        "Thank you!";
+
+                // ✅ Simulate SMS sending (no gateway)
+                System.out.println("========== SMS SENT ==========");
+                System.out.println("To: " + contact.replaceAll("\\s+",""));
+                System.out.println(smsText);
+                System.out.println("==============================");
+
+                // ✅ Popup message for JSP
+                request.setAttribute("smsSuccess", "SMS Sent Successfully to " + contact.replaceAll("\\s+",""));
+
+                // ✅ Existing success message
                 request.setAttribute("success", "Reservation created successfully! Reservation No: " + reservationCode);
                 request.getRequestDispatcher("new_reservation.jsp").forward(request, response);
 

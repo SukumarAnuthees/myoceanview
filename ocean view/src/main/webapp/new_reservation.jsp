@@ -16,6 +16,9 @@
     // Messages from servlet
     String success = (String) request.getAttribute("success");
     String error   = (String) request.getAttribute("error");
+
+    // ✅ SMS popup message
+    String smsSuccess = (String) request.getAttribute("smsSuccess");
 %>
 
 <!DOCTYPE html>
@@ -189,6 +192,53 @@
             font-weight:600;
             margin-bottom:12px;
         }
+
+        /* ✅ SMS Popup */
+        .popup{
+            position:fixed;
+            inset:0;
+            background:rgba(15,23,42,0.55);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:9999;
+        }
+        .popup-card{
+            width:min(520px,92%);
+            background:#fff;
+            border-radius:18px;
+            padding:22px;
+            box-shadow:0 20px 50px rgba(0,0,0,0.25);
+            display:flex;
+            gap:14px;
+            align-items:center;
+            border:1px solid rgba(0,0,0,0.06);
+            animation:popIn .18s ease-out;
+        }
+        @keyframes popIn{
+            from{transform:translateY(10px);opacity:0;}
+            to{transform:translateY(0);opacity:1;}
+        }
+        .popup-icon{
+            width:44px;height:44px;border-radius:14px;
+            display:grid;place-items:center;
+            background:rgba(34,197,94,0.12);
+            font-size:22px;
+        }
+        .popup-text h3{margin:0;font-size:16px;color:#0f172a;}
+        .popup-text p{margin:4px 0 0;font-size:14px;color:#475569;}
+        .popup-btn{
+            margin-left:auto;
+            width:auto;
+            padding:10px 16px;
+            border-radius:12px;
+            border:none;
+            cursor:pointer;
+            font-weight:800;
+            background:linear-gradient(135deg,#0b3a5d,#2e9bb7);
+            color:#fff;
+        }
+        .popup-btn:hover{opacity:.95;}
     </style>
 
     <script>
@@ -408,6 +458,19 @@
 
             document.getElementById("checkOut").addEventListener("change", validateDates);
         };
+
+        // ✅ Popup close
+        function closePopup(){
+            const p = document.getElementById("smsPopup");
+            if(p) p.style.display = "none";
+        }
+
+        // ✅ Auto close after 3 seconds
+        function autoClosePopup(){
+            setTimeout(() => {
+                closePopup();
+            }, 3000);
+        }
     </script>
 </head>
 
@@ -460,6 +523,21 @@
 
         <% if (error != null) { %>
             <div class="msg err"><%= error %></div>
+        <% } %>
+
+        <!-- ✅ SMS POPUP (shows only when smsSuccess is set) -->
+        <% if (smsSuccess != null) { %>
+            <div id="smsPopup" class="popup">
+                <div class="popup-card">
+                    <div class="popup-icon">✅</div>
+                    <div class="popup-text">
+                        <h3>SMS Notification</h3>
+                        <p><%= smsSuccess %></p>
+                    </div>
+                    <button type="button" class="popup-btn" onclick="closePopup()">OK</button>
+                </div>
+            </div>
+            <script>autoClosePopup();</script>
         <% } %>
 
         <div class="card">
